@@ -17,6 +17,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import LoginHeader from "./LoginHeader";
 import useCmsIdentity from "../../hook/useCmsIdentity";
 import useProjectInfo from "../../hook/useProjectInfo";
+import theme from "../../theme/theme";
 
 interface LoginForm {
   username: string;
@@ -51,7 +52,7 @@ const Login: FC = () => {
   return (
     <Box
       sx={{
-        background: "#eee",
+        background: theme.palette.background,
         display: "flex",
         alignItems: "center",
         height: "100vh",
