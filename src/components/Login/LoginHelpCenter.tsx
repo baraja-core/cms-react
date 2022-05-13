@@ -52,7 +52,11 @@ const LoginHelpCenter: FC = () => {
       <Button variant="text" onClick={() => setHelpOpen(true)}>
         Need help?
       </Button>
-      <LoginHelpCenterDialog onClose={() => setHelpOpen(false)} open={helpOpen}>
+      <LoginHelpCenterDialog
+        onClose={() => setHelpOpen(false)}
+        open={helpOpen}
+        fullWidth
+      >
         <LoginHelpCenterTitle onClose={() => setHelpOpen(false)} />
         <DialogContent dividers>
           <Typography>What can we help you with?</Typography>
