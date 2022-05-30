@@ -1,6 +1,6 @@
-import { Provider } from "react-redux";
-import { store } from "./redux/store";
-import BrjCms from "./components/BrjCmsCore";
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
+import BrjCms from './components/BrjCmsCore';
 
 function App() {
   return (

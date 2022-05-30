@@ -1,7 +1,7 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { call, put, takeLeading } from "redux-saga/effects";
-import { getProjectInfoEndpoint } from "./api";
-import { ApiState, createApiState } from "../apiState";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { call, put, takeLeading } from 'redux-saga/effects';
+import { getProjectInfoEndpoint } from './api';
+import { ApiState, createApiState } from '../apiState';
 
 export interface ProjectInfo {
   projectName: string;
@@ -10,7 +10,7 @@ export interface ProjectInfo {
 const initialState: ApiState<ProjectInfo> = createApiState();
 
 export const projectInfo = createSlice({
-  name: "brj/projectInfo",
+  name: 'brj/projectInfo',
   initialState: initialState,
   reducers: {
     setProjectInfo: (state, action: PayloadAction<ProjectInfo>) => {
@@ -25,8 +25,9 @@ export const projectInfo = createSlice({
 });
 
 export function* fetchProjectInfo(action: PayloadAction) {
-  const response: Awaited<ReturnType<typeof getProjectInfoEndpoint>> =
-    yield call(getProjectInfoEndpoint /*, action.payload*/);
+  const response: Awaited<ReturnType<typeof getProjectInfoEndpoint>> = yield call(
+    getProjectInfoEndpoint /*, action.payload*/
+  );
 
   yield put(setProjectInfo(response.data));
 }

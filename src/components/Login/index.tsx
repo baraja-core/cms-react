@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from 'react';
 import {
   Box,
   Button,
@@ -8,16 +8,20 @@ import {
   FormGroup,
   Switch,
   TextField,
-} from "@mui/material";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import LoginEasterEgg from "./LoginEasterEgg";
-import LoginHelpCenter from "./LoginHelpCenter";
-import { SubmitHandler, useForm } from "react-hook-form";
-import LoginHeader from "./LoginHeader";
-import useCmsIdentity from "../../hook/useCmsIdentity";
-import useProjectInfo from "../../hook/useProjectInfo";
-import theme from "../../theme/theme";
+} from '@mui/material';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import LoginEasterEgg from './LoginEasterEgg';
+import LoginHelpCenter from './LoginHelpCenter';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import LoginHeader from './LoginHeader';
+import useCmsIdentity from '../../hook/useCmsIdentity';
+import useProjectInfo from '../../hook/useProjectInfo';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import IconButton from '@mui/material/IconButton';
+import theme from '../../theme/theme';
+import AdminBar from '../AdminBar';
 
 interface LoginForm {
   username: string;
@@ -28,9 +32,10 @@ interface LoginForm {
 const Login: FC = () => {
   const { login } = useCmsIdentity();
   const { getProjectInfo } = useProjectInfo();
+  const [showPassword, setShowPassword] = useState(false);
 
   const projectInfo = getProjectInfo();
-  console.log("projectInfo", projectInfo);
+  console.log('projectInfo', projectInfo);
 
   const {
     register,
@@ -39,8 +44,8 @@ const Login: FC = () => {
     formState: { errors },
   } = useForm<LoginForm>({
     defaultValues: {
-      username: "",
-      password: "",
+      username: '',
+      password: '',
       permanentLogin: false,
     },
   });
@@ -53,17 +58,18 @@ const Login: FC = () => {
     <Box
       sx={{
         background: theme.palette.background,
-        display: "flex",
-        alignItems: "center",
-        height: "100vh",
+        display: 'flex',
+        alignItems: 'center',
+        height: '100vh',
       }}
     >
+      <AdminBar />
       <Container maxWidth="sm">
         <CssBaseline />
         <Grid
           sx={{
-            borderRadius: "0.25rem",
-            boxShadow: "0 0.5rem 1rem rgba(0, 0, 0, 0.1)",
+            borderRadius: '0.25rem',
+            boxShadow: '0 0.5rem 1rem rgba(0, 0, 0, 0.1)',
           }}
         >
           {!projectInfo.loading && projectInfo.data ? (
@@ -73,16 +79,16 @@ const Login: FC = () => {
                 <Grid
                   container
                   sx={{
-                    background: "white",
-                    borderBottom: "1px solid #e9ecef",
+                    background: 'white',
+                    borderBottom: '1px solid #e9ecef',
                   }}
                 >
                   <Grid item md={12} sx={{ padding: 2 }}>
-                    <LoginEasterEgg username={watch("username")} />
+                    <LoginEasterEgg username={watch('username')} />
                     <FormGroup>
                       <TextField
-                        {...register("username", {
-                          required: "Username is required.",
+                        {...register('username', {
+                          required: 'Username is required.',
                         })}
                         variant="outlined"
                         label="Username"
@@ -93,15 +99,26 @@ const Login: FC = () => {
                     </FormGroup>
                     <FormGroup sx={{ marginTop: 3 }}>
                       <TextField
-                        {...register("password", {
-                          required: "Password is required.",
+                        {...register('password', {
+                          required: 'Password is required.',
                         })}
-                        type="password"
+                        type={showPassword ? 'text' : 'password'}
                         variant="outlined"
                         label="Password"
                         error={Boolean(errors.password)}
                         helperText={errors.password?.message}
                         tabIndex={2}
+                        InputProps={{
+                          endAdornment: (
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={() => setShowPassword(!showPassword)}
+                              edge="end"
+                            >
+                              {showPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                          ),
+                        }}
                       />
                     </FormGroup>
                     <Box sx={{ marginTop: 3 }}>
@@ -112,20 +129,17 @@ const Login: FC = () => {
                   </Grid>
                 </Grid>
               </form>
-              <Grid container sx={{ background: "white", padding: ".5em 0" }}>
+              <Grid container sx={{ background: 'white', padding: '.5em 0' }}>
                 <Grid item md={8} sx={{ paddingLeft: 2 }}>
-                  <FormControlLabel
-                    control={<Switch {...register("permanentLogin")} />}
-                    label="Stay signed in"
-                  />
+                  <FormControlLabel control={<Switch {...register('permanentLogin')} />} label="Stay signed in" />
                 </Grid>
-                <Grid item md={4} sx={{ textAlign: "right", paddingRight: 2 }}>
+                <Grid item md={4} sx={{ textAlign: 'right', paddingRight: 2 }}>
                   <LoginHelpCenter />
                 </Grid>
               </Grid>
             </>
           ) : (
-            <Box sx={{ textAlign: "center", padding: "5em 0" }}>
+            <Box sx={{ textAlign: 'center', padding: '5em 0' }}>
               <CircularProgress />
             </Box>
           )}

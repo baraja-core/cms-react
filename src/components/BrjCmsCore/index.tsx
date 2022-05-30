@@ -1,8 +1,8 @@
-import { FC } from "react";
-import useCmsIdentity from "../../hook/useCmsIdentity";
-import Login from "../Login";
-import reportWebVitals from "../../reportWebVitals";
-import BrjCmsCoreInterface from "./BrjCmsCoreInterface";
+import { FC } from 'react';
+import useCmsIdentity from '../../hook/useCmsIdentity';
+import Login from '../Login';
+import reportWebVitals from '../../reportWebVitals';
+import BrjCmsCoreInterface from './BrjCmsCoreInterface';
 
 const BrjCmsCore: FC = () => {
   const cmsIdentity = useCmsIdentity();

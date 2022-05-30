@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface Localization {
   locale: string;
@@ -15,13 +15,13 @@ export interface SetLocaleAction {
 }
 
 export const localization = createSlice({
-  name: "brj/localization",
+  name: 'brj/localization',
   initialState: {
-    locale: "cs",
+    locale: 'cs',
     availableLocales: [
-      { locale: "cs", flag: "🇨🇿" },
-      { locale: "en", flag: "🇬🇧" },
-      { locale: "sk", flag: "🇸🇰" },
+      { locale: 'cs', flag: '🇨🇿' },
+      { locale: 'en', flag: '🇬🇧' },
+      { locale: 'sk', flag: '🇸🇰' },
     ],
   } as Localization,
   reducers: {

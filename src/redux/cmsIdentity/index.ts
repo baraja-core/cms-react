@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface CmsIdentity {
   username: string;
@@ -8,7 +8,7 @@ export interface CmsIdentity {
 }
 
 export const cmsIdentity = createSlice({
-  name: "brj/cmsIdentity",
+  name: 'brj/cmsIdentity',
   initialState: null as CmsIdentity | null,
   reducers: {
     setIdentity: (state, action: PayloadAction<CmsIdentity>) => {

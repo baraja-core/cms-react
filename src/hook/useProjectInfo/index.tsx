@@ -1,4 +1,4 @@
-import { brjSelector, useBrjSelector } from "../../redux/state";
+import { brjSelector, useBrjSelector } from '../../redux/state';
 
 const useProjectInfo = () => {
   const projectInfo = useBrjSelector((state) => brjSelector(state).projectInfo);
