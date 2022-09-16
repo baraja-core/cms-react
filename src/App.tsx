@@ -1,12 +1,15 @@
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import { store } from './redux/store';
-import BrjCms from './components/BrjCmsCore';
+import Router from './Router';
 
 function App() {
   return (
-    <Provider store={store}>
-      <BrjCms />
-    </Provider>
+    <BrowserRouter>
+      <Provider store={store}>
+        <Router />
+      </Provider>
+    </BrowserRouter>
   );
 }
 

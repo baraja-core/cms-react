@@ -5,6 +5,7 @@ export interface CmsIdentity {
   fullName: string;
   avatarUrl?: string;
   isLoggedIn: boolean;
+  isOAuthOk?: boolean;
 }
 
 export const cmsIdentity = createSlice({

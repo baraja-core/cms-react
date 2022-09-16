@@ -1,11 +1,10 @@
 import React, { FC, useState } from 'react';
-import DialogContent from '@mui/material/DialogContent';
-import Typography from '@mui/material/Typography';
-import DialogActions from '@mui/material/DialogActions';
 import { Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import DialogContent from '@mui/material/DialogContent';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
+import LoginHelpCenterBody from './LoginHelpCenterBody';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -55,13 +54,8 @@ const LoginHelpCenter: FC = () => {
       <LoginHelpCenterDialog onClose={() => setHelpOpen(false)} open={helpOpen} fullWidth>
         <LoginHelpCenterTitle onClose={() => setHelpOpen(false)} />
         <DialogContent dividers>
-          <Typography>What can we help you with?</Typography>
+          <LoginHelpCenterBody />
         </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={() => setHelpOpen(false)}>
-            Save changes
-          </Button>
-        </DialogActions>
       </LoginHelpCenterDialog>
     </>
   );

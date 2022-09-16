@@ -21,7 +21,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import IconButton from '@mui/material/IconButton';
 import theme from '../../theme/theme';
-import AdminBar from '../AdminBar';
+import AdminBar from '../../components/AdminBar';
 
 interface LoginForm {
   username: string;
@@ -29,7 +29,7 @@ interface LoginForm {
   permanentLogin: boolean;
 }
 
-const Login: FC = () => {
+const LoginPage: FC = () => {
   const { login } = useCmsIdentity();
   const { getProjectInfo } = useProjectInfo();
   const [showPassword, setShowPassword] = useState(false);
@@ -149,4 +149,4 @@ const Login: FC = () => {
   );
 };
 
-export default Login;
+export default LoginPage;

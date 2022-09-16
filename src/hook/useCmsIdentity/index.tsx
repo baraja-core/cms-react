@@ -7,7 +7,7 @@ const useCmsIdentity = () => {
 
   const cmsIdentity = useBrjSelector((state) => brjSelector(state).cmsIdentity);
 
-  const isLoggedIn = () => Boolean(cmsIdentity);
+  const isLoggedIn = () => cmsIdentity?.isLoggedIn;
 
   const getIdentity = () => cmsIdentity;
 

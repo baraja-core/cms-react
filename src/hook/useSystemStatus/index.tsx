@@ -14,6 +14,8 @@ const useSystemStatus = () => {
 
   const isOnline = () => navigator.onLine;
 
+  const isServer = () => typeof window === `undefined`;
+
   const updateOnlineStatus = () => {
     const online = isOnline();
     useEffect(() => {
@@ -36,7 +38,7 @@ const useSystemStatus = () => {
     // TODO: Call cms/keep-connection and if !req.data.login => reload()
   };
 
-  return { init, isOnline, reload };
+  return { init, isOnline, isServer, reload };
 };
 
 export default useSystemStatus;
