@@ -50,6 +50,8 @@ const LoginPage: FC = () => {
     },
   });
 
+  const [username, password] = [watch('username'), watch('password')];
+
   const onSubmit: SubmitHandler<LoginForm> = (data) => {
     login(data.username, data.password, data.permanentLogin);
   };
@@ -84,7 +86,7 @@ const LoginPage: FC = () => {
                   }}
                 >
                   <Grid item md={12} sx={{ padding: 2 }}>
-                    <LoginEasterEgg username={watch('username')} />
+                    <LoginEasterEgg username={username} />
                     <FormGroup>
                       <TextField
                         {...register('username', {
@@ -122,7 +124,7 @@ const LoginPage: FC = () => {
                       />
                     </FormGroup>
                     <Box sx={{ marginTop: 3 }}>
-                      <Button type="submit" variant="contained" tabIndex={3}>
+                      <Button type="submit" variant="contained" tabIndex={3} disabled={!username || !password}>
                         Login
                       </Button>
                     </Box>

@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
-import Grid from '@mui/material/Grid';
-import { Link, MenuItem, TextField } from '@mui/material';
+import { Box, Link, MenuItem, TextField } from '@mui/material';
 import useLocalization from '../../hook/useLocalization';
 
 interface LoginHeaderProps {
@@ -11,8 +10,8 @@ const LoginHeader: FC<LoginHeaderProps> = ({ projectName }) => {
   const { getLocale, getAvailableLocales, setLocale } = useLocalization();
 
   return (
-    <Grid container sx={{ padding: 2, background: '#eee' }}>
-      <Grid item md={8}>
+    <Box sx={{ display: 'flex', padding: '.5em 1em', background: '#eee' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
         <Link
           href={`https://baraja.cz/cms?locale=${getLocale()}`}
           underline="always"
@@ -22,17 +21,17 @@ const LoginHeader: FC<LoginHeaderProps> = ({ projectName }) => {
         >
           {projectName}
         </Link>
-      </Grid>
-      <Grid item md={4} sx={{ textAlign: 'right' }}>
+      </Box>
+      <Box sx={{ width: '6em', textAlign: 'right' }}>
         <TextField select size="small" value={getLocale()} onChange={(e) => setLocale(e.target.value)}>
           {getAvailableLocales().map((localeItem) => (
-            <MenuItem key={localeItem.locale} value={localeItem.locale}>
+            <MenuItem key={localeItem.locale} value={localeItem.locale} sx={{ padding: '0 .5em', textAlign: 'center' }}>
               {localeItem.flag ? localeItem.flag : localeItem.locale}
             </MenuItem>
           ))}
         </TextField>
-      </Grid>
-    </Grid>
+      </Box>
+    </Box>
   );
 };
 
