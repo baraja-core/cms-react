@@ -4,6 +4,7 @@ import BrjCmsCoreInterface from './components/BrjCmsCore/BrjCmsCoreInterface';
 import LoginPage from './pages/LoginPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import SetUserPasswordPage from './pages/SetUserPasswordPage';
+import Error404 from './ui/Error/Error404';
 
 const Router = () => {
   const cmsIdentity = useCmsIdentity();
@@ -21,6 +22,7 @@ const Router = () => {
           <Route path="/" element={<LoginPage />} />
         </>
       )}
+      <Route path="*" element={<Error404 />} />
     </Routes>
   );
 };
