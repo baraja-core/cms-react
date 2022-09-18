@@ -12,7 +12,7 @@ const AdminBarSearch: FC = () => {
         type="search"
         size="small"
         placeholder="Search..."
-        sx={{ color: 'white' }}
+        sx={{ color: 'white', background: '#333' }}
       />
       {query && (
         <Box

@@ -11,21 +11,13 @@ const link = (route: string, params: object = {}) => {
   const plugin = formatter(pluginPart ? pluginPart : 'Homepage');
   const view = formatter(viewPart ? viewPart : 'default');
 
-  let path = '/admin/';
-  if (plugin === 'homepage') {
-    if (view !== 'default') {
-      path += 'homepage/' + view;
-    }
-  } else {
-    path += `${plugin}${view !== 'default' ? '/' + view : ''}`;
-  }
-
-  let keys = Object.entries(params);
-  if (keys.length > 0) {
-    path += `?${httpBuildQuery(params)}`;
-  }
-
-  return path;
+  return `/admin/${
+    plugin !== 'homepage'
+      ? `${plugin}${view !== 'default' ? `/${view}` : ''}`
+      : view !== 'default'
+      ? `homepage/${view}`
+      : ''
+  }${Object.entries(params).length > 0 ? `?${httpBuildQuery(params)}` : ''}`;
 };
 
 export default link;

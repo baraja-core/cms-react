@@ -1,9 +1,12 @@
 import { brjSelector, useBrjSelector } from '../../redux/state';
 import { useDispatch } from 'react-redux';
 import { setIdentity } from '../../redux/cmsIdentity';
+import useNotification from '../useNotification';
 
 const useCmsIdentity = () => {
   const dispatch = useDispatch();
+
+  const { createFlashMessage } = useNotification();
 
   const cmsIdentity = useBrjSelector((state) => brjSelector(state).cmsIdentity);
 
@@ -13,6 +16,7 @@ const useCmsIdentity = () => {
 
   const login = (username: string, password: string, permanentLogin: boolean) => {
     // alert(username + ", " + password + ", " + permanentLogin);
+    createFlashMessage({ content: <>Welcome back {username}</> });
     dispatch(
       setIdentity({
         username,

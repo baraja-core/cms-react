@@ -1,6 +1,9 @@
 import { FC, useEffect } from 'react';
 import { Box } from '@mui/material';
 import AdminBar from '../AdminBar';
+import FlashMessage from './FlashMessage';
+import Menu from './Menu';
+import PluginCanvas from './PluginCanvas';
 import reportWebVitals from './../../reportWebVitals';
 
 const BrjCmsCoreInterface: FC = () => {
@@ -18,7 +21,15 @@ const BrjCmsCoreInterface: FC = () => {
   return (
     <Box>
       <AdminBar />
-      <Box sx={{ marginTop: '50px' }}>Abcd</Box>
+      <FlashMessage />
+      <Box sx={{ display: 'flex', marginTop: '50px' }}>
+        <Box sx={{ width: '30em' }}>
+          <Menu />
+        </Box>
+        <Box sx={{ width: '100%' }}>
+          <PluginCanvas />
+        </Box>
+      </Box>
     </Box>
   );
 };
