@@ -14,9 +14,9 @@ import Grid from '@mui/material/Grid';
 import LoginEasterEgg from './LoginEasterEgg';
 import LoginHelpCenter from './LoginHelpCenter';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useSettings } from '../../hook/useSettings';
 import LoginHeader from './LoginHeader';
 import useCmsIdentity from '../../hook/useCmsIdentity';
-import useProjectInfo from '../../hook/useProjectInfo';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import IconButton from '@mui/material/IconButton';
@@ -31,11 +31,11 @@ interface LoginForm {
 
 const LoginPage: FC = () => {
   const { login } = useCmsIdentity();
-  const { getProjectInfo } = useProjectInfo();
+  const { getServerSettings } = useSettings();
   const [showPassword, setShowPassword] = useState(false);
 
-  const projectInfo = getProjectInfo();
-  console.log('projectInfo', projectInfo);
+  const serverSettings = getServerSettings();
+  console.log('serverSettings', serverSettings);
 
   const {
     register,
@@ -74,9 +74,9 @@ const LoginPage: FC = () => {
             boxShadow: '0 0.5rem 1rem rgba(0, 0, 0, 0.1)',
           }}
         >
-          {!projectInfo.loading && projectInfo.data ? (
+          {serverSettings ? (
             <>
-              <LoginHeader projectName={projectInfo.data.projectName} />
+              <LoginHeader projectName={serverSettings.projectName} />
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Grid
                   container

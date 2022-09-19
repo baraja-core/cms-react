@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 import AdminBar from '../AdminBar';
 import FlashMessage from './FlashMessage';
@@ -7,6 +7,8 @@ import PluginCanvas from './PluginCanvas';
 import reportWebVitals from './../../reportWebVitals';
 
 const BrjCmsCoreInterface: FC = () => {
+  const [pluginName, setPluginName] = useState<string | undefined>();
+
   reportWebVitals((metric: any) => {
     console.log(metric);
   });
@@ -24,10 +26,10 @@ const BrjCmsCoreInterface: FC = () => {
       <FlashMessage />
       <Box sx={{ display: 'flex', marginTop: '50px' }}>
         <Box sx={{ width: '30em' }}>
-          <Menu />
+          <Menu setPlugin={setPluginName} />
         </Box>
         <Box sx={{ width: '100%' }}>
-          <PluginCanvas />
+          <PluginCanvas name={pluginName ?? 'Dashboard'} />
         </Box>
       </Box>
     </Box>

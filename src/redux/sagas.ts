@@ -1,6 +1,5 @@
-import { localizationSaga } from "./localization";
-import { fetchProjectInfo, projectInfoSaga } from "./projectInfo";
+import { localizationSaga } from './localization';
 
-const sagas = [localizationSaga, projectInfoSaga, fetchProjectInfo];
+const sagas = [localizationSaga];
 
 export default sagas;
