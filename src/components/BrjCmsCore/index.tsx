@@ -1,39 +1,43 @@
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import { Box } from '@mui/material';
+import { ErrorStatus } from './ErrorStatus';
+import { useSystemStatus } from '../../hook/useSystemStatus';
+import { useEffectOnce } from '../../hook/useEffectOnce';
 import AdminBar from '../AdminBar';
 import FlashMessage from './FlashMessage';
 import Menu from './Menu';
 import PluginCanvas from './PluginCanvas';
+import Footer from '../../ui/Footer';
 import reportWebVitals from './../../reportWebVitals';
 
-const BrjCmsCoreInterface: FC = () => {
-  const [pluginName, setPluginName] = useState<string | undefined>();
+export const BrjCmsCore: FC = () => {
+  useSystemStatus(true);
 
   reportWebVitals((metric: any) => {
-    console.log(metric);
+    //console.log(metric);
   });
 
-  useEffect(() => {
+  useEffectOnce(() => {
     console.log(
       '%c Welcome to Baraja CMS. All components has been loaded successfully.',
       'background:#3c3c3c;color:#bada55'
     );
-  }, []);
+  });
 
   return (
     <Box>
       <AdminBar />
       <FlashMessage />
+      <ErrorStatus />
       <Box sx={{ display: 'flex', marginTop: '50px' }}>
         <Box sx={{ width: '30em' }}>
-          <Menu setPlugin={setPluginName} />
+          <Menu />
         </Box>
         <Box sx={{ width: '100%' }}>
-          <PluginCanvas name={pluginName ?? 'Dashboard'} />
+          <PluginCanvas />
         </Box>
       </Box>
+      <Footer>.</Footer>
     </Box>
   );
 };
-
-export default BrjCmsCoreInterface;

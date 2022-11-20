@@ -2,7 +2,7 @@ import { FC, ReactNode } from 'react';
 import { Box, Container } from '@mui/material';
 import { Theme } from '../../core/ThemeContext';
 import Logo from '../Logo';
-import palette from '../palette';
+import { Color } from '../palette';
 
 interface HeaderProps {
   children?: ReactNode;
@@ -14,7 +14,7 @@ const Header: FC<HeaderProps> = ({ children }) => (
       height: '50px',
       padding: '.6em',
       borderBottom: '1px solid black',
-      background: palette.color.dark,
+      background: Color.Dark,
       color: 'white',
     }}
   >

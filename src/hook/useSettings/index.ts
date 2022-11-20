@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { brjSelector, useBrjSelector } from '../../redux/state';
-import { apiClient } from '../../redux/apiClient';
-import { ServerSettings, setSettingsDiff, SettingsDiff } from '../../redux/settings';
+import { loadSettings, setSettingsDiff, SettingsDiff } from '../../redux/settings';
 
 export const useSettings = () => {
   const dispatch = useDispatch();
@@ -10,8 +9,8 @@ export const useSettings = () => {
   const settings = useBrjSelector((state) => brjSelector(state).settings);
 
   useEffect(() => {
-    if (settings.serverSettings) return;
-    apiClient.get<ServerSettings>(`api/v1/cms/settings`).then((data) => updateSettings({ serverSettings: data.data }));
+    if (settings.serverSettings || settings.loading) return;
+    dispatch(loadSettings());
   }, []);
 
   const getServerSettings = () => settings.serverSettings;

@@ -1,12 +1,12 @@
 import React, { FC, useState } from 'react';
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import DialogContent from '@mui/material/DialogContent';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
-import LoginHelpCenterBody from './LoginHelpCenterBody';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import HelpCenter from '../../components/HelpCenter';
 
 const LoginHelpCenterDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -23,22 +23,17 @@ interface DialogTitleProps {
 
 const LoginHelpCenterTitle: FC<DialogTitleProps> = ({ onClose }) => {
   return (
-    <DialogTitle sx={{ m: 0, p: 2 }}>
-      Help center
-      {onClose && (
-        <IconButton
-          aria-label="close"
-          onClick={onClose}
-          sx={{
-            position: 'absolute',
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-      )}
+    <DialogTitle sx={{ padding: '.75em', paddingBottom: 0 }}>
+      <Box sx={{ display: 'flex' }}>
+        <Box sx={{ width: '100%' }}>Help center</Box>
+        <Box>
+          {onClose && (
+            <IconButton aria-label="close" onClick={onClose}>
+              <CloseIcon />
+            </IconButton>
+          )}
+        </Box>
+      </Box>
     </DialogTitle>
   );
 };
@@ -54,7 +49,7 @@ const LoginHelpCenter: FC = () => {
       <LoginHelpCenterDialog onClose={() => setHelpOpen(false)} open={helpOpen} fullWidth>
         <LoginHelpCenterTitle onClose={() => setHelpOpen(false)} />
         <DialogContent dividers>
-          <LoginHelpCenterBody />
+          <HelpCenter />
         </DialogContent>
       </LoginHelpCenterDialog>
     </>

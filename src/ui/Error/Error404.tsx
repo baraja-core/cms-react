@@ -1,5 +1,6 @@
 import { Container } from '@mui/material';
 import { Box } from '@mui/system';
+import { Theme } from '../../core/ThemeContext';
 import { useLocation } from 'react-router-dom';
 import Logo from '../Logo';
 
@@ -10,7 +11,7 @@ const Error404 = () => {
     <Container>
       <Box sx={{ padding: '4em 0' }}>
         <Box sx={{ marginBottom: '2em' }}>
-          <Logo />
+          <Logo theme={Theme.Light} />
         </Box>
         <p>
           <strong>404</strong>. <ins style={{ color: '#777', textDecoration: 'none' }}>That’s an error.</ins>

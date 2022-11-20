@@ -15,7 +15,7 @@ export const localStorageKey = 'system__dark-mode';
 export const resolveDefaultTheme = (): Theme =>
   typeof localStorage !== 'undefined' && localStorage.getItem(localStorageKey)
     ? (localStorage.getItem(localStorageKey) as Theme)
-    : typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+    : typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: Dark)').matches
     ? Theme.Dark
     : Theme.Light;
 

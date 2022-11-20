@@ -1,5 +1,5 @@
 import { FC, ReactNode, useContext } from 'react';
-import Palette from '../palette';
+import { Color } from '../palette';
 import { Box } from '@mui/material';
 import { Theme, ThemeContext } from '../../core/ThemeContext';
 
@@ -19,7 +19,7 @@ const Card: FC<CardProps> = ({ children, padding, title, icon, background }) => 
   return (
     <Box
       sx={{
-        border: `1px solid ${theme === Theme.Light ? Palette.color.gray : Palette.color.grayDarkBorder}`,
+        border: `1px solid ${theme === Theme.Light ? Color.Gray : Color.GrayDarkBorder}`,
         borderRadius: '.25rem',
         margin: '.75em 0',
         ...(background ? { background: background } : {}),
@@ -32,7 +32,7 @@ const Card: FC<CardProps> = ({ children, padding, title, icon, background }) => 
             padding: '.25em .75em',
             borderTopLeftRadius: '.25rem',
             borderTopRightRadius: '.25rem',
-            background: theme === Theme.Light ? Palette.color.grayLight : Palette.color.grayDark,
+            background: theme === Theme.Light ? Color.GrayLight : Color.GrayDark,
           }}
         >
           {icon && <Box sx={{ paddingRight: 1 }}>{icon}</Box>}

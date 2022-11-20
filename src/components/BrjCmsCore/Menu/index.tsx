@@ -1,21 +1,31 @@
 import { Box, CircularProgress } from '@mui/material';
 import { useSettings } from '../../../hook/useSettings';
-import { FC } from 'react';
+import { usePlugin } from '../../../hook/usePlugin';
 
-interface MenuProps {
-  setPlugin: (name: string) => void;
-}
-
-const Menu: FC<MenuProps> = ({ setPlugin }) => {
+const Menu = () => {
   const { getServerSettings } = useSettings();
+  const { getSelectedPluginName, setPlugin } = usePlugin();
+  const selectedPluginName = getSelectedPluginName();
   const menu = getServerSettings()?.menu;
 
   return menu ? (
     <Box>
       {menu.map((item) => (
-        <Box key={item.key} sx={{ border: '1px solid #eee' }} onClick={() => setPlugin(item.pluginName)}>
+        <Box
+          key={item.key}
+          sx={{
+            border: '1px solid #eee',
+            cursor: 'pointer',
+            padding: '.1em .5em',
+            ...(item.pluginName === selectedPluginName ? { background: '#edf0f1' } : {}),
+            ':hover': {
+              background: '#ebebeb',
+            },
+          }}
+          onClick={() => setPlugin(item.pluginName)}
+        >
           {/*item.icon*/}
-          {item.title},{item.pluginName}
+          {item.title}
         </Box>
       ))}
     </Box>

@@ -1,39 +1,26 @@
-import { FC, useEffect, useState } from 'react';
-import { Box } from '@mui/material';
-import { apiClient } from '../../../redux/apiClient';
+import React from 'react';
+import { Box, CircularProgress } from '@mui/material';
+import { Color } from '../../../ui/palette';
+import { usePlugin } from '../../../hook/usePlugin';
 
-export interface PluginComponent {
-  key: string;
-  name: string;
-  tab: string;
-  source: string;
-  position: number;
-  params: Record<string, string | number | null>;
-}
-
-interface PluginStructure {
-  staticAssets: { format: string; url: string }[];
-  title?: string;
-  activeKey: string;
-  components: PluginComponent[];
-}
-
-interface PluginCanvasProps {
-  name: string;
-}
-
-const PluginCanvas: FC<PluginCanvasProps> = ({ name }) => {
-  const [structure, setStructure] = useState<PluginStructure>();
-
-  useEffect(() => {
-    apiClient.get<PluginStructure>(`api/v1/cms/plugin?name=${name}`).then((response) => setStructure(response.data));
-  }, [name]);
+const PluginCanvas = () => {
+  const { getByName, getSelectedPluginName } = usePlugin();
+  const selectedPluginName = getSelectedPluginName();
+  const structure = getByName(selectedPluginName ?? 'Dashboard');
 
   return (
     <Box>
-      Plugin:
-      <hr />
-      {JSON.stringify(structure)}
+      {structure ? (
+        <>
+          Plugin: {JSON.stringify(selectedPluginName)}
+          <hr />
+          {JSON.stringify(structure)}
+        </>
+      ) : (
+        <Box sx={{ textAlign: 'center', padding: '5em 0' }}>
+          <CircularProgress sx={{ color: Color.Orange }} />
+        </Box>
+      )}
     </Box>
   );
 };

@@ -1,46 +1,72 @@
-import { useEffect } from 'react';
-import useNotification from '../useNotification';
-import { NotificationVariant } from '../../core/notification/NotificationContext';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useSettings } from '../../hook/useSettings';
+import { useEffectOnce } from '../useEffectOnce';
+import { setSettingsDiff } from '../../redux/settings';
+import { apiClient } from '../../redux/apiClient';
 
-const useSystemStatus = () => {
-  const { createFlashMessage } = useNotification();
+export const KeepAuthInterval = 5000;
 
-  useEffect(() => {
-    keepConnection();
+interface KeepConnectionResponse {
+  login: boolean;
+}
+
+export const useSystemStatus = (registerHandler: boolean = false) => {
+  const dispatch = useDispatch();
+  const { settings } = useSettings();
+
+  const [runner, setRunner] = useState<number>();
+
+  useEffectOnce(() => {
+    if (!registerHandler || settings.runnerRegistered) return;
+    callKeepConnection();
     window.addEventListener('online', updateOnlineStatus);
     window.addEventListener('offline', updateOnlineStatus);
+    updateOnlineStatus();
+    setRunner(window.setInterval(callKeepConnection, KeepAuthInterval));
+    dispatch(setSettingsDiff({ runnerRegistered: true }));
 
     return () => {
+      clearInterval(runner);
       window.removeEventListener('online', updateOnlineStatus);
       window.removeEventListener('offline', updateOnlineStatus);
+      dispatch(setSettingsDiff({ runnerRegistered: false }));
     };
-  }, []);
+  });
 
-  const isOnline = () => navigator.onLine;
+  const isOnline = () => Boolean(navigator.onLine);
 
   const isServer = () => typeof window === `undefined`;
 
   const updateOnlineStatus = () => {
-    if (!isOnline()) return;
-    createFlashMessage({
-      content: 'The connection to the server has been successfully restored.',
-      variant: NotificationVariant.Success,
-      title: 'Connection info',
-    });
+    dispatch(setSettingsDiff({ online: isOnline() }));
   };
 
   const reload = () => {
-    location.reload();
+    // eslint-disable-next-line no-restricted-globals
+    location?.reload();
   };
 
-  const keepConnection = () => {
-    if (!isOnline()) {
-      return;
-    }
-    // TODO: Call cms/keep-connection and if !req.data.login => reload()
+  const callKeepConnection = () => {
+    const lastCall = settings.keepAuthLastCall ?? 0;
+    const time = Date.now();
+    const delta = time - lastCall;
+    console.log('keep connection delta', {
+      lastCall: lastCall,
+      time: time,
+      delta: delta,
+    });
+    if (!isOnline()) return;
+
+    apiClient
+      .get<KeepConnectionResponse>(`api/v1/cms/keep-connection`)
+      .then((response) => {
+        dispatch(setSettingsDiff({ keepAuthOk: response.data.login, keepAuthLastCall: time }));
+      })
+      .catch(() => {
+        dispatch(setSettingsDiff({ keepAuthOk: 'error', keepAuthLastCall: time }));
+      });
   };
 
-  return { isOnline, isServer, reload };
+  return { isOnline, isServer, reload, callKeepConnection };
 };
-
-export default useSystemStatus;

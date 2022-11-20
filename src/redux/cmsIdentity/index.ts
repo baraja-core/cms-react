@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface CmsIdentity {
+  identityId?: string;
   username: string;
   fullName: string;
   avatarUrl?: string;
@@ -12,7 +13,7 @@ export const cmsIdentity = createSlice({
   name: 'brj/cmsIdentity',
   initialState: null as CmsIdentity | null,
   reducers: {
-    setIdentity: (state, action: PayloadAction<CmsIdentity>) => {
+    setIdentity: (state, action: PayloadAction<CmsIdentity | null>) => {
       return action.payload;
     },
   },

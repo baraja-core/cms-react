@@ -1,9 +1,12 @@
 import { FC, useState } from 'react';
 import { Avatar, Box, Button, MenuItem } from '@mui/material';
 import { ExpandMore } from '@mui/icons-material';
+import useCmsIdentity from '../../hook/useCmsIdentity';
 
 const AdminBarUser: FC = () => {
   const [open, setOpen] = useState(false);
+  const { getIdentity, logout } = useCmsIdentity();
+  const identity = getIdentity();
 
   return (
     <>
@@ -18,12 +21,12 @@ const AdminBarUser: FC = () => {
           height: '45px',
         }}
       >
-        <Avatar
-          src="https://cdn.baraja.cz/avatar/fcb9cb1c69f8e21b6cdd8df9e80cda39.png"
-          alt="Avatar"
-          sx={{ marginRight: 1, width: '32px', height: '32px' }}
-        />
-        <span style={{ whiteSpace: 'nowrap' }}>Jan Barášek</span>
+        {identity && (
+          <>
+            <Avatar src={identity.avatarUrl} alt="Avatar" sx={{ marginRight: 1, width: '32px', height: '32px' }} />
+            <span style={{ whiteSpace: 'nowrap' }}>{identity.fullName}</span>
+          </>
+        )}
         <ExpandMore />
       </Button>
       {open && (
@@ -31,6 +34,7 @@ const AdminBarUser: FC = () => {
           sx={{
             position: 'absolute',
             width: '100%',
+            top: '45px',
             textAlign: 'center',
             color: '#333',
             backgroundColor: '#fff',
@@ -45,9 +49,9 @@ const AdminBarUser: FC = () => {
           }}
         >
           <MenuItem href="http://localhost:81/baraja/nordic-craft.cz/www/admin">Dashboard</MenuItem>
-          <hr className="w-100 my-2" />
+          <hr />
           <MenuItem href="http://localhost:81/baraja/nordic-craft.cz/www/admin/user/detail?id=1">My Profile</MenuItem>
-          <hr className="w-100 my-2" />
+          <hr />
           <MenuItem>Settings</MenuItem>
           <MenuItem>Sign out</MenuItem>
           <MenuItem>Debug mode</MenuItem>

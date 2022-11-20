@@ -5,7 +5,7 @@ interface Config {
 }
 
 const getGlobalConfiguration = (): Config => ({
-  apiBaseUrl: 'http://localhost:3000/baraja/nordic-craft.cz/www',
+  apiBaseUrl: 'http://localhost/baraja/nordic-craft.cz/www/',
   availableLocales: ['cs', 'en', 'sk'],
   defaultLocale: 'cs',
 });
