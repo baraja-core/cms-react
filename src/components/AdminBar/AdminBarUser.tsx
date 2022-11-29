@@ -1,11 +1,13 @@
 import { FC, useState } from 'react';
 import { Avatar, Box, Button, MenuItem } from '@mui/material';
 import { ExpandMore } from '@mui/icons-material';
+import { useCas } from '../../hook/useCas';
 import useCmsIdentity from '../../hook/useCmsIdentity';
 
 const AdminBarUser: FC = () => {
   const [open, setOpen] = useState(false);
-  const { getIdentity, logout } = useCmsIdentity();
+  const { getIdentity } = useCmsIdentity();
+  const { logout } = useCas();
   const identity = getIdentity();
 
   return (
@@ -53,7 +55,7 @@ const AdminBarUser: FC = () => {
           <MenuItem href="http://localhost:81/baraja/nordic-craft.cz/www/admin/user/detail?id=1">My Profile</MenuItem>
           <hr />
           <MenuItem>Settings</MenuItem>
-          <MenuItem>Sign out</MenuItem>
+          <MenuItem onClick={() => logout()}>Sign out</MenuItem>
           <MenuItem>Debug mode</MenuItem>
         </Box>
       )}

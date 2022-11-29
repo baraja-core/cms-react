@@ -1,19 +1,10 @@
 import React, { FC, useState } from 'react';
-import {
-  Box,
-  Button,
-  CircularProgress,
-  CssBaseline,
-  FormControlLabel,
-  FormGroup,
-  Switch,
-  TextField,
-} from '@mui/material';
+import { Box, Button, CircularProgress, FormControlLabel, FormGroup, Switch, TextField } from '@mui/material';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { CenteredContent } from '../../ui/Page/CenteredContent';
 import { Color } from '../../ui/palette';
 import { useSettings } from '../../hook/useSettings';
 import { useCas } from '../../hook/useCas';
-import Container from '@mui/material/Container';
 import LoginEasterEgg from './LoginEasterEgg';
 import LoginHelpCenter from './LoginHelpCenter';
 import LoginHeader from './LoginHeader';
@@ -23,7 +14,6 @@ import useCmsIdentity from '../../hook/useCmsIdentity';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import IconButton from '@mui/material/IconButton';
-import theme from '../../theme/theme';
 
 interface LoginForm {
   username: string;
@@ -34,7 +24,7 @@ interface LoginForm {
 const LoginPage: FC = () => {
   const { isLoggedIn, login } = useCmsIdentity();
   const { getServerSettings } = useSettings();
-  const { getOrganisations, getContextOrganisation } = useCas();
+  const { getContextOrganisation } = useCas();
   const [showPassword, setShowPassword] = useState(false);
   const [isLogging, setLogging] = useState(false);
 
@@ -63,108 +53,93 @@ const LoginPage: FC = () => {
   };
 
   return (
-    <Box
-      sx={{
-        background: theme.palette.background,
-        display: 'flex',
-        alignItems: 'center',
-        height: '100vh',
-      }}
-    >
-      <FlashMessage />
-      {isLoggedIn() && <AdminBar />}
-      <Container maxWidth="sm">
-        <CssBaseline />
-        <Box
-          sx={{
-            borderRadius: '0.25rem',
-            boxShadow: '0 0.5rem 1rem rgba(0, 0, 0, 0.1)',
-          }}
-        >
-          {serverSettings ? (
-            <>
-              <LoginHeader />
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <Box
-                  sx={{
-                    background: 'white',
-                    borderBottom: '1px solid #e9ecef',
-                    padding: 2,
-                  }}
-                >
-                  {organisation?.description && <Box>{organisation.description}</Box>}
-                  <LoginEasterEgg username={username} />
-                  <FormGroup>
-                    <TextField
-                      {...register('username', {
-                        required: 'Username is required.',
-                      })}
-                      variant="outlined"
-                      label="Username"
-                      error={Boolean(errors.username)}
-                      helperText={errors.username?.message}
-                      tabIndex={1}
-                      disabled={!Boolean(organisation)}
-                    />
-                  </FormGroup>
-                  <FormGroup sx={{ marginTop: 3 }}>
-                    <TextField
-                      {...register('password', {
-                        required: 'Password is required.',
-                      })}
-                      type={showPassword ? 'text' : 'password'}
-                      variant="outlined"
-                      label="Password"
-                      error={Boolean(errors.password)}
-                      helperText={errors.password?.message}
-                      tabIndex={2}
-                      disabled={!Boolean(organisation)}
-                      InputProps={{
-                        endAdornment: (
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={() => setShowPassword(!showPassword)}
-                            edge="end"
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        ),
-                      }}
-                    />
-                  </FormGroup>
-                  <Box sx={{ marginTop: 3 }}>
-                    {isLogging ? (
-                      <CircularProgress sx={{ color: Color.Orange }} />
-                    ) : (
-                      <Button
-                        type="submit"
-                        variant="contained"
-                        tabIndex={3}
-                        disabled={!username || !password || !Boolean(organisation)}
-                      >
-                        Login
-                      </Button>
-                    )}
-                  </Box>
-                </Box>
-              </form>
-              <Box sx={{ display: 'flex', background: 'white', padding: '.5em 0' }}>
-                <Box sx={{ width: '60%', paddingLeft: 2 }}>
-                  <FormControlLabel control={<Switch {...register('permanentLogin')} />} label="Stay signed in" />
-                </Box>
-                <Box sx={{ width: '40%', display: 'flex', justifyContent: 'right', paddingRight: 2 }}>
-                  <LoginHelpCenter />
+    <CenteredContent>
+      <>
+        <FlashMessage />
+        {isLoggedIn() && <AdminBar />}
+        {serverSettings ? (
+          <>
+            <LoginHeader />
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Box
+                sx={{
+                  background: 'white',
+                  borderBottom: '1px solid #e9ecef',
+                  padding: 2,
+                }}
+              >
+                {organisation?.description && <Box>{organisation.description}</Box>}
+                <LoginEasterEgg username={username} />
+                <FormGroup>
+                  <TextField
+                    {...register('username', {
+                      required: 'Username is required.',
+                    })}
+                    variant="outlined"
+                    label="Username"
+                    error={Boolean(errors.username)}
+                    helperText={errors.username?.message}
+                    tabIndex={1}
+                    disabled={!Boolean(organisation)}
+                  />
+                </FormGroup>
+                <FormGroup sx={{ marginTop: 3 }}>
+                  <TextField
+                    {...register('password', {
+                      required: 'Password is required.',
+                    })}
+                    type={showPassword ? 'text' : 'password'}
+                    variant="outlined"
+                    label="Password"
+                    error={Boolean(errors.password)}
+                    helperText={errors.password?.message}
+                    tabIndex={2}
+                    disabled={!Boolean(organisation)}
+                    InputProps={{
+                      endAdornment: (
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={() => setShowPassword(!showPassword)}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      ),
+                    }}
+                  />
+                </FormGroup>
+                <Box sx={{ marginTop: 3 }}>
+                  {isLogging ? (
+                    <CircularProgress sx={{ color: Color.Orange }} />
+                  ) : (
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      tabIndex={3}
+                      disabled={!username || !password || !Boolean(organisation)}
+                    >
+                      Login
+                    </Button>
+                  )}
                 </Box>
               </Box>
-            </>
-          ) : (
-            <Box sx={{ textAlign: 'center', padding: '5em 0' }}>
-              <CircularProgress sx={{ color: Color.Orange }} />
+            </form>
+            <Box sx={{ display: 'flex', background: 'white', padding: '.5em 0' }}>
+              <Box sx={{ width: '60%', paddingLeft: 2 }}>
+                <FormControlLabel control={<Switch {...register('permanentLogin')} />} label="Stay signed in" />
+              </Box>
+              <Box sx={{ width: '40%', display: 'flex', justifyContent: 'right', paddingRight: 2 }}>
+                <LoginHelpCenter />
+              </Box>
             </Box>
-          )}
-        </Box>
-      </Container>
-    </Box>
+          </>
+        ) : (
+          <Box sx={{ textAlign: 'center', padding: '5em 0' }}>
+            <CircularProgress sx={{ color: Color.Orange }} />
+          </Box>
+        )}
+      </>
+    </CenteredContent>
   );
 };
 

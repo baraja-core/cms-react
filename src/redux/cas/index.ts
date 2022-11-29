@@ -26,6 +26,10 @@ export interface CasLoginResponse {
   avatarUrl: string;
 }
 
+export interface CasVerifyOAuthResponse {
+  ok: boolean;
+}
+
 export interface CasState {
   success: boolean;
   selectedOrganisation?: string;

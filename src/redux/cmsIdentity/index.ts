@@ -16,7 +16,11 @@ export const cmsIdentity = createSlice({
     setIdentity: (state, action: PayloadAction<CmsIdentity | null>) => {
       return action.payload;
     },
+    setOAuthStatus: (state, action: PayloadAction<boolean>) => {
+      if (!state) return;
+      state.isOAuthOk = action.payload;
+    },
   },
 });
 
-export const { setIdentity } = cmsIdentity.actions;
+export const { setIdentity, setOAuthStatus } = cmsIdentity.actions;

@@ -15,6 +15,8 @@ const useCmsIdentity = () => {
 
   const isLoggedIn = () => cmsIdentity?.isLoggedIn;
 
+  const isOAuthOk = () => isLoggedIn() && Boolean(cmsIdentity?.isOAuthOk);
+
   const getIdentity = () => cmsIdentity;
 
   const login = async (username: string, password: string, permanentLogin: boolean) => {
@@ -45,13 +47,11 @@ const useCmsIdentity = () => {
     }
   };
 
-  const logout = () => apiClient.post<CasLoginResponse>(`api/v1/cas/logout`).then(() => dispatch(setIdentity(null)));
-
   return {
     isLoggedIn,
+    isOAuthOk,
     getIdentity,
     login,
-    logout,
   };
 };
 
