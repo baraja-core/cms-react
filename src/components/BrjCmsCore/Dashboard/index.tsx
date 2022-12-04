@@ -4,7 +4,7 @@ import { DashboardTopicEditor } from './DashboardTopicEditor';
 import { DashboardFeed } from './DashboardFeed';
 import { Box } from '@mui/material';
 import { apiClient } from '../../../redux/apiClient';
-import { DefaultButton } from '@fluentui/react';
+import { DefaultButton, Spinner } from '@fluentui/react';
 
 interface DashboardFeedItemUser {
   id: number;
@@ -44,7 +44,7 @@ export const Dashboard = () => {
         <DefaultButton onClick={() => setOpenNewTopic(!openNewTopic)}>Compose a new topic</DefaultButton>
       </Box>
       {openNewTopic && <DashboardTopicEditor updateCallback={() => loadData()} />}
-      <DashboardFeed items={dashboard?.feed ?? []} updateCallback={() => loadData()} />
+      {dashboard ? <DashboardFeed items={dashboard.feed} updateCallback={() => loadData()} /> : <Spinner size={3} />}
     </Box>
   );
 };

@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { BrjCmsCore } from './components/BrjCmsCore';
+import { Settings } from './components/Settings';
 import { OneTimePasswordPage } from './pages/OneTimePasswordPage';
 import { LoadingPage } from './pages/LoadingPage/LoadingPage';
 import { useCmsTitle } from './hook/useCmsTitle';
@@ -22,6 +23,14 @@ const Router = () => {
       ) : isLoggedIn() ? (
         isOAuthOk() ? (
           <>
+            <Route
+              path="admin/settings"
+              element={
+                <BrjCmsCore>
+                  <Settings />
+                </BrjCmsCore>
+              }
+            />
             <Route path="*" element={<BrjCmsCore />} />
           </>
         ) : (

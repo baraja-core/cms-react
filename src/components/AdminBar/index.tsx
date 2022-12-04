@@ -6,6 +6,7 @@ import AdminBarUser from './AdminBarUser';
 import AdminBarSearch from './AdminBarSearch';
 import Logo from '../../ui/Logo';
 import HomeIcon from '@mui/icons-material/Home';
+import { DefaultButton } from '@fluentui/react';
 
 const AdminBar: FC = () => (
   <Box
@@ -28,17 +29,17 @@ const AdminBar: FC = () => (
         <Logo height={20} theme={Theme.Dark} />
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <a href="http://localhost:81/baraja/nordic-craft.cz/www">
+        <a href="/">
           <HomeIcon />
         </a>
       </Box>
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <a href="http://localhost:81/baraja/nordic-craft.cz/www/admin">Admin</a>
+      <Box sx={{ display: 'flex', alignItems: 'center', margin: '0 .25em' }}>
+        <DefaultButton href="/admin">Admin</DefaultButton>
       </Box>
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <a href="http://localhost:81/baraja/nordic-craft.cz/www/api-documentation" target="_blank" rel="noreferrer">
+      <Box sx={{ display: 'flex', alignItems: 'center', margin: '0 .25em' }}>
+        <DefaultButton href="/api-documentation" target="_blank" rel="noreferrer">
           API&nbsp;Doc
-        </a>
+        </DefaultButton>
       </Box>
       <Box sx={{ width: '100%' }}>Content</Box>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>

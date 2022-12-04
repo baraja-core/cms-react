@@ -1,16 +1,19 @@
 import { FC, useState } from 'react';
-import { Box, Button } from '@mui/material';
+import { Box, Button, ButtonBase } from '@mui/material';
 import { ExpandMore } from '@mui/icons-material';
 import { useCas } from '../../hook/useCas';
 import { DefaultButton, PersonaSize } from '@fluentui/react';
+import { Color } from '../../ui/palette';
 import { UserAvatar } from '../User/UserAvatar';
 import { UserPersona } from '../User/UserPersona';
+import { useLinkGenerator } from '../../hook/useLinkGenerator';
 import useCmsIdentity from '../../hook/useCmsIdentity';
 
 const AdminBarUser: FC = () => {
   const [open, setOpen] = useState(false);
   const { getIdentity } = useCmsIdentity();
   const { logout } = useCas();
+  const { link } = useLinkGenerator();
   const identity = getIdentity();
 
   return (
@@ -60,9 +63,17 @@ const AdminBarUser: FC = () => {
             </Box>
           </Box>
           <Box sx={{ textAlign: 'center' }}>
-            <DefaultButton href="/admin/my-profile">Manage your account</DefaultButton>
+            <DefaultButton href={link('my-profile')}>Manage your account</DefaultButton>
           </Box>
-          <Box sx={{ display: 'flex', padding: '1em', marginTop: '1em', borderTop: '1px solid black' }}>
+          <Box sx={{ marginTop: '1em' }}>
+            <ButtonBase
+              href={link('settings')}
+              sx={{ width: '100%', marginBottom: '.5em', padding: '.75em', background: Color.GrayLight }}
+            >
+              Settings
+            </ButtonBase>
+          </Box>
+          <Box sx={{ display: 'flex', padding: '1em', marginTop: '.5em', borderTop: '1px solid black' }}>
             <Box sx={{ width: '45%' }}>
               <DefaultButton onClick={() => logout()}>Sign out</DefaultButton>
             </Box>

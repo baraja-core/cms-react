@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 import { Box } from '@mui/material';
 import { ErrorStatus } from './ErrorStatus';
 import { useSystemStatus } from '../../hook/useSystemStatus';
@@ -10,7 +10,11 @@ import PluginCanvas from './PluginCanvas';
 import Footer from '../../ui/Footer';
 import reportWebVitals from './../../reportWebVitals';
 
-export const BrjCmsCore: FC = () => {
+interface BrjCmsCoreProps {
+  children?: ReactNode;
+}
+
+export const BrjCmsCore: FC<BrjCmsCoreProps> = ({ children }) => {
   useSystemStatus(true);
 
   reportWebVitals((metric: any) => {
@@ -33,9 +37,7 @@ export const BrjCmsCore: FC = () => {
         <Box sx={{ width: '20em' }}>
           <Menu />
         </Box>
-        <Box sx={{ width: '100%', padding: '0 .75em' }}>
-          <PluginCanvas />
-        </Box>
+        <Box sx={{ width: '100%', padding: '0 .75em' }}>{children || <PluginCanvas />}</Box>
       </Box>
       <Footer>.</Footer>
     </Box>

@@ -13,13 +13,18 @@ export const DashboardTopicEditor: FC<DashboardTopicEditorProps> = ({ parent, up
   const [sending, setSending] = useState(false);
 
   const post = () => {
-    if (!message) return;
+    if (!message.trim()) return;
     setSending(true);
-    apiClient.post(`api/v1/cms-dashboard/post-topic`, { message: message, parentId: parent }).then((response) => {
-      setSending(false);
-      setMessage('');
-      updateCallback && updateCallback();
-    });
+    apiClient
+      .post(`api/v1/cms-dashboard/post-topic`, {
+        message: message.trim(),
+        parentId: parent,
+      })
+      .then((response) => {
+        setSending(false);
+        setMessage('');
+        updateCallback && updateCallback();
+      });
   };
 
   return (
@@ -38,7 +43,9 @@ export const DashboardTopicEditor: FC<DashboardTopicEditorProps> = ({ parent, up
           {sending ? (
             <Spinner size={3} />
           ) : (
-            <PrimaryButton onClick={() => post()}>{parent ? 'Post a comment' : 'Post'}</PrimaryButton>
+            <PrimaryButton onClick={() => post()} disabled={!message.trim()}>
+              {parent ? 'Post a comment' : 'Post'}
+            </PrimaryButton>
           )}
         </Box>
       )}
