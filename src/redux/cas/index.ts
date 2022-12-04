@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { call, put, takeLeading } from 'redux-saga/effects';
-import { CmsIdentity, setIdentity } from '../../redux/cmsIdentity';
+import { CmsIdentity, setIdentity, setIdentityLoaded } from '../../redux/cmsIdentity';
 import { apiClient } from '../apiClient';
 import { resolveDefaultOrganisation } from '../../core/cas/resolveDefaultOrganisation';
 
@@ -14,7 +14,7 @@ export interface OrganisationResponse {
 
 export interface CasResponse {
   organisations: OrganisationResponse[];
-  identity?: CmsIdentity;
+  identity?: CmsIdentity & { requireOtp?: boolean };
 }
 
 export interface CasLoginResponse {
@@ -64,9 +64,14 @@ function* loadCasDefaultEndpointSaga() {
   const casDefaultEndpoint = () => apiClient.get<CasResponse>(`api/v1/cas`);
   const response: Awaited<ReturnType<typeof casDefaultEndpoint>> = yield call(casDefaultEndpoint);
   const defaultOrganisation = resolveDefaultOrganisation(response.data.organisations);
+  const identity = response.data.identity;
   yield put(setCasDefault(response.data));
   if (defaultOrganisation) yield put(selectOrganisation(defaultOrganisation.slug));
-  if (response.data.identity) yield put(setIdentity(response.data.identity));
+  if (identity) {
+    yield put(setIdentity({ ...identity, isOAuthOk: !identity.requireOtp }));
+  } else {
+    yield put(setIdentityLoaded());
+  }
 }
 
 export function* loadCasDefaultSaga() {

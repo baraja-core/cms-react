@@ -1,6 +1,7 @@
 import React from 'react';
-import { Box, CircularProgress } from '@mui/material';
-import { Color } from '../../../ui/palette';
+import { Box } from '@mui/material';
+import { Spinner } from '@fluentui/react';
+import { Dashboard } from '../Dashboard';
 import { usePlugin } from '../../../hook/usePlugin';
 
 const PluginCanvas = () => {
@@ -10,7 +11,9 @@ const PluginCanvas = () => {
 
   return (
     <Box>
-      {structure ? (
+      {!selectedPluginName || selectedPluginName === 'Dashboard' ? (
+        <Dashboard />
+      ) : structure ? (
         <>
           Plugin: {JSON.stringify(selectedPluginName)}
           <hr />
@@ -18,7 +21,7 @@ const PluginCanvas = () => {
         </>
       ) : (
         <Box sx={{ textAlign: 'center', padding: '5em 0' }}>
-          <CircularProgress sx={{ color: Color.Orange }} />
+          <Spinner size={3} />
         </Box>
       )}
     </Box>

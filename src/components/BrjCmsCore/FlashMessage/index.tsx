@@ -1,40 +1,43 @@
-import { ReactNode } from 'react';
-import { Alert, Box, Stack } from '@mui/material';
-import { AlertColor } from '@mui/material/Alert/Alert';
+import { Box, Stack } from '@mui/material';
+import { MessageBar, MessageBarType } from '@fluentui/react';
 import { NotificationType, NotificationVariant } from '../../../core/notification/NotificationContext';
 import useNotification from '../../../hook/useNotification';
-import DoneIcon from '@mui/icons-material/Done';
-import ErrorIcon from '@mui/icons-material/Error';
-import ReportProblemIcon from '@mui/icons-material/ReportProblem';
-import InfoIcon from '@mui/icons-material/Info';
-import KeyIcon from '@mui/icons-material/Key';
 
 const FlashMessage = () => {
   const { getFilteredQueue, closeNotification } = useNotification();
 
-  const icons: Record<NotificationVariant, ReactNode> = {
-    [NotificationVariant.Success]: <DoneIcon />,
-    [NotificationVariant.Error]: <ErrorIcon />,
-    [NotificationVariant.Warning]: <ReportProblemIcon />,
-    [NotificationVariant.Info]: <InfoIcon />,
-    [NotificationVariant.Internal]: <KeyIcon />,
+  const variants: Record<NotificationVariant, MessageBarType> = {
+    [NotificationVariant.Success]: MessageBarType.success,
+    [NotificationVariant.Error]: MessageBarType.error,
+    [NotificationVariant.Warning]: MessageBarType.warning,
+    [NotificationVariant.Info]: MessageBarType.info,
+    [NotificationVariant.Internal]: MessageBarType.blocked,
   };
 
+  const queue = getFilteredQueue(NotificationType.FlashMessage);
+
   return (
-    <Box sx={{ position: 'fixed', left: '3em', bottom: '3em', zIndex: 1000, width: '300px' }}>
-      <Stack sx={{ width: '100%' }} spacing={2}>
-        {getFilteredQueue(NotificationType.FlashMessage).map((flashMessage) => (
-          <Alert
-            key={flashMessage.id}
-            icon={icons[flashMessage.variant]}
-            onClose={() => closeNotification(flashMessage.id)}
-            severity={flashMessage.variant as AlertColor}
-          >
-            {flashMessage.content}
-          </Alert>
-        ))}
-      </Stack>
-    </Box>
+    <>
+      {queue.length > 0 && (
+        <Box sx={{ position: 'fixed', left: '3em', bottom: '3em', zIndex: 1000, width: '300px' }}>
+          <Stack sx={{ width: '100%' }} spacing={2}>
+            {queue.map((flashMessage) => (
+              <MessageBar
+                key={flashMessage.id}
+                messageBarType={variants[flashMessage.variant]}
+                onDismiss={() => closeNotification(flashMessage.id)}
+                dismissButtonAriaLabel="Close"
+                truncated={true}
+                isMultiline={false}
+                overflowButtonAriaLabel="See more"
+              >
+                {flashMessage.content}
+              </MessageBar>
+            ))}
+          </Stack>
+        </Box>
+      )}
+    </>
   );
 };
 

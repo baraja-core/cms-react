@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Box, Button, TextField } from '@mui/material';
+import { Box, TextField } from '@mui/material';
+import { PrimaryButton } from '@fluentui/react';
 
 export const OtherProblem = () => {
   const [sent, setSent] = useState(false);
@@ -30,9 +31,7 @@ export const OtherProblem = () => {
           </p>
           <TextField label="Problem description" size="small" fullWidth multiline rows={6} />
           <TextField type="email" label="Your contact e-mail" size="small" fullWidth sx={{ margin: '1em 0' }} />
-          <Button variant="contained" onClick={() => process()}>
-            Send
-          </Button>
+          <PrimaryButton onClick={() => process()}>Send</PrimaryButton>
           <Box sx={{ marginTop: '1em' }}>
             <i>Never share personal information that cannot be seen by the administrator of this project.</i>
           </Box>

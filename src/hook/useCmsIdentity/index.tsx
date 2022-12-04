@@ -3,7 +3,7 @@ import { CasLoginResponse } from '../../redux/cas';
 import { NotificationVariant } from '../../core/notification/NotificationContext';
 import { apiClient } from '../../redux/apiClient';
 import { useDispatch } from 'react-redux';
-import { setIdentity } from '../../redux/cmsIdentity';
+import { OAuthStatus, setIdentity } from '../../redux/cmsIdentity';
 import useNotification from '../useNotification';
 
 const useCmsIdentity = () => {
@@ -13,11 +13,20 @@ const useCmsIdentity = () => {
 
   const cmsIdentity = useBrjSelector((state) => brjSelector(state).cmsIdentity);
 
-  const isLoggedIn = () => cmsIdentity?.isLoggedIn;
+  const isLoadingIdentity = () => !cmsIdentity.loaded;
 
-  const isOAuthOk = () => isLoggedIn() && Boolean(cmsIdentity?.isOAuthOk);
+  const isLoggedIn = () => Boolean(cmsIdentity.identity?.isLoggedIn);
 
-  const getIdentity = () => cmsIdentity;
+  const isOAuthOk = () => (isLoggedIn() ? Boolean(cmsIdentity.identity?.isOAuthOk) : true);
+
+  const getOAuthStatus = (): OAuthStatus =>
+    cmsIdentity.identity?.isOAuthOk === undefined
+      ? OAuthStatus.Waiting
+      : cmsIdentity.identity?.isOAuthOk
+      ? OAuthStatus.Ok
+      : OAuthStatus.NotOk;
+
+  const getIdentity = () => cmsIdentity.identity;
 
   const login = async (username: string, password: string, permanentLogin: boolean) => {
     const response = (
@@ -48,8 +57,10 @@ const useCmsIdentity = () => {
   };
 
   return {
+    isLoadingIdentity,
     isLoggedIn,
     isOAuthOk,
+    getOAuthStatus,
     getIdentity,
     login,
   };

@@ -1,7 +1,10 @@
 import { FC, useState } from 'react';
-import { Avatar, Box, Button, MenuItem } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { ExpandMore } from '@mui/icons-material';
 import { useCas } from '../../hook/useCas';
+import { DefaultButton, PersonaSize } from '@fluentui/react';
+import { UserAvatar } from '../User/UserAvatar';
+import { UserPersona } from '../User/UserPersona';
 import useCmsIdentity from '../../hook/useCmsIdentity';
 
 const AdminBarUser: FC = () => {
@@ -25,19 +28,20 @@ const AdminBarUser: FC = () => {
       >
         {identity && (
           <>
-            <Avatar src={identity.avatarUrl} alt="Avatar" sx={{ marginRight: 1, width: '32px', height: '32px' }} />
+            <UserPersona id="me" size={PersonaSize.size32} />
             <span style={{ whiteSpace: 'nowrap' }}>{identity.fullName}</span>
           </>
         )}
         <ExpandMore />
       </Button>
-      {open && (
+      {identity && open && (
         <Box
           sx={{
             position: 'absolute',
-            width: '100%',
+            width: '300px',
             top: '45px',
-            textAlign: 'center',
+            right: 0,
+            marginRight: '10px',
             color: '#333',
             backgroundColor: '#fff',
             border: 0,
@@ -45,18 +49,27 @@ const AdminBarUser: FC = () => {
             borderBottomRightRadius: '.5rem',
             listStyle: 'none',
             padding: 0,
-            paddingBottom: '10px',
             zIndex: 99998,
             boxShadow: '0 .5rem 2rem rgba(0, 0, 0, .20)',
           }}
         >
-          <MenuItem href="http://localhost:81/baraja/nordic-craft.cz/www/admin">Dashboard</MenuItem>
-          <hr />
-          <MenuItem href="http://localhost:81/baraja/nordic-craft.cz/www/admin/user/detail?id=1">My Profile</MenuItem>
-          <hr />
-          <MenuItem>Settings</MenuItem>
-          <MenuItem onClick={() => logout()}>Sign out</MenuItem>
-          <MenuItem>Debug mode</MenuItem>
+          <Box sx={{ textAlign: 'center', padding: '1em' }}>
+            <UserAvatar size={64} centered />
+            <Box sx={{ marginTop: 1 }}>
+              <span style={{ whiteSpace: 'nowrap' }}>{identity.fullName}</span>
+            </Box>
+          </Box>
+          <Box sx={{ textAlign: 'center' }}>
+            <DefaultButton href="/admin/my-profile">Manage your account</DefaultButton>
+          </Box>
+          <Box sx={{ display: 'flex', padding: '1em', marginTop: '1em', borderTop: '1px solid black' }}>
+            <Box sx={{ width: '45%' }}>
+              <DefaultButton onClick={() => logout()}>Sign out</DefaultButton>
+            </Box>
+            <Box sx={{ width: '55%', textAlign: 'right' }}>
+              <DefaultButton>Debug mode</DefaultButton>
+            </Box>
+          </Box>
         </Box>
       )}
     </>

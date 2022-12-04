@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Box, Button, TextField } from '@mui/material';
+import { Box, TextField } from '@mui/material';
+import { PrimaryButton } from '@fluentui/react';
 
 export const ForgottenPassword = () => {
   const [sent, setSent] = useState(false);
@@ -11,9 +12,7 @@ export const ForgottenPassword = () => {
   return (
     <Box>
       <TextField label="Enter your username or e-mail" size="small" fullWidth sx={{ margin: '1em 0' }} />
-      <Button variant="contained" onClick={() => process()}>
-        Send
-      </Button>
+      <PrimaryButton onClick={() => process()}>Send</PrimaryButton>
     </Box>
   );
 };

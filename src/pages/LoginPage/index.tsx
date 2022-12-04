@@ -1,8 +1,7 @@
 import React, { FC, useState } from 'react';
-import { Box, Button, CircularProgress, FormControlLabel, FormGroup, Switch, TextField } from '@mui/material';
+import { Box, Button, FormControlLabel, FormGroup, Switch, TextField } from '@mui/material';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { CenteredContent } from '../../ui/Page/CenteredContent';
-import { Color } from '../../ui/palette';
 import { useSettings } from '../../hook/useSettings';
 import { useCas } from '../../hook/useCas';
 import LoginEasterEgg from './LoginEasterEgg';
@@ -14,6 +13,7 @@ import useCmsIdentity from '../../hook/useCmsIdentity';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import IconButton from '@mui/material/IconButton';
+import { Spinner } from '@fluentui/react';
 
 interface LoginForm {
   username: string;
@@ -108,9 +108,9 @@ const LoginPage: FC = () => {
                     }}
                   />
                 </FormGroup>
-                <Box sx={{ marginTop: 3 }}>
+                <Box sx={{ marginTop: 3, minHeight: '2.5em' }}>
                   {isLogging ? (
-                    <CircularProgress sx={{ color: Color.Orange }} />
+                    <Spinner size={3} />
                   ) : (
                     <Button
                       type="submit"
@@ -135,7 +135,7 @@ const LoginPage: FC = () => {
           </>
         ) : (
           <Box sx={{ textAlign: 'center', padding: '5em 0' }}>
-            <CircularProgress sx={{ color: Color.Orange }} />
+            <Spinner size={3} />
           </Box>
         )}
       </>

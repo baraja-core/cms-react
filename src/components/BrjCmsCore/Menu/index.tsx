@@ -10,7 +10,15 @@ const Menu = () => {
 
   return menu ? (
     <Box>
-      {menu.map((item) => (
+      {[
+        {
+          key: 'dashboard',
+          title: 'Dashboard',
+          pluginName: 'Dashboard',
+          priority: 0,
+        },
+        ...menu,
+      ].map((item) => (
         <Box
           key={item.key}
           sx={{

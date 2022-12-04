@@ -1,8 +1,9 @@
 import React, { ReactNode, useState } from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, ButtonBase, Typography } from '@mui/material';
 import { ForgottenPassword } from './ForgottenPassword';
 import { ForgottenUsername } from './ForgottenUsername';
 import { OtherProblem } from './OtherProblem';
+import { Color } from '../../ui/palette';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 enum PageType {
@@ -48,9 +49,17 @@ const HelpCenter = () => {
           <Typography sx={{ marginBottom: '1em' }}>What can we help you with?</Typography>
           {pages.map((pageItem) => (
             <Box key={pageItem.type}>
-              <Button variant="outlined" onClick={() => setPage(pageItem.type)} sx={{ marginBottom: '.5em' }}>
+              <ButtonBase
+                sx={{
+                  width: '100%',
+                  marginBottom: '.5em',
+                  padding: '.75em',
+                  background: Color.GrayLight,
+                }}
+                onClick={() => setPage(pageItem.type)}
+              >
                 {pageItem.label}
-              </Button>
+              </ButtonBase>
             </Box>
           ))}
         </>

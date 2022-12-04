@@ -30,10 +30,10 @@ export const BrjCmsCore: FC = () => {
       <FlashMessage />
       <ErrorStatus />
       <Box sx={{ display: 'flex', marginTop: '50px' }}>
-        <Box sx={{ width: '30em' }}>
+        <Box sx={{ width: '20em' }}>
           <Menu />
         </Box>
-        <Box sx={{ width: '100%' }}>
+        <Box sx={{ width: '100%', padding: '0 .75em' }}>
           <PluginCanvas />
         </Box>
       </Box>
